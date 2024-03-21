@@ -2,6 +2,7 @@ from tkinter import *
 from admin import *
 import mysql.connector
 from tkinter import messagebox
+from receptionUI import *
 
 color="lightblue"
 font_size=('Arial Bold',10)
@@ -153,6 +154,16 @@ class signup:
                 conn.commit()
                 messagebox.showinfo("Success", "Registration successful!")
 
+                #clear the entry fields
+                self.fname_entry.delete(0,END)
+                self.surname_entry.delete(0,END)
+                self.username_entry.delete(0,END)
+                self.phone_number_entry.delete(0,END)
+                self.password_entry.delete(0,END)
+                self.confirm_password_entry.delete(0,END)
+                self.department_entry.delete(0,END)
+                self.admincode_entry.delete(0,END)
+
         except mysql.connector.Error as error:
             messagebox.showerror("Error", f"Failed to register user: {error}")
 
@@ -231,17 +242,19 @@ class login:
                 if department == "admin":
                    self.home_instance=home_page(self.main)
                 elif department == "receptionist":
-                    self.main.destroy()
-                    import receptionUI
+                    self.receptioninstance=receptionUX(self.main)
                 elif department =="doctor":
                     self.main.destroy
                     import doctorUI
                     
                 else:
                     messagebox.showwarning("Warning!!","no interface for you😭")
+                self.username_entry.delete(0,END)
+                self.Password_entry.delete(0,END)
 
             else:
                 messagebox.showerror("Error","Invalid username or password")
+
         except mysql.connector.Error as e:
             messagebox.showerror("Error",f"error: {e}")
         finally:
