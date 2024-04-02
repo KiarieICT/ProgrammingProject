@@ -1,8 +1,9 @@
 from tkinter import *
 from users import *
+import customtkinter as ctk
 
+ctk.set_appearance_mode("Light")
 root=Tk()
-root.title("Dispensary system")
 root.geometry("1000x550+100+30")
 root.config(bg="#87ceeb")
 

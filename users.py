@@ -1,10 +1,16 @@
 from tkinter import *
+import customtkinter as ctk
 from admin import *
 import mysql.connector
 from tkinter import messagebox
 from receptionUI import *
+from doctorUI import *
+
+
 
 color="lightblue"
+bgcolor="White"
+fontcolor="black"
 font_size=('Arial Bold',10)
 
 
@@ -15,7 +21,7 @@ class signup:
     def __init__(self,main):
 
         self.main=main
-
+        
 
         signup_window=Frame(main,padx=90,pady=30,bg=color,height=430, width=800,border=0)
         signup_window.place(y=50,x=100)
@@ -30,6 +36,7 @@ class signup:
         self.fname.place(x=125,y=55)
 
         self.fname_entry=Entry(user_details)
+        self.fname_entry.focus()
         self.fname_entry.place(x=205,y=55)
 
 #      sirname
@@ -175,6 +182,7 @@ class signup:
         # the login view
     def loginview(self):
         self.login_instance=login(self.main)
+        
 
     
 
@@ -187,6 +195,7 @@ class login:
     
     def __init__(self,main):
         self.main=main
+        self.main.title("Escarpment Dispensary")
         login_window=Frame(main,bg=color,height=430, width=800,border=0)
         login_window.place(y=50,x=100)
 
@@ -197,27 +206,26 @@ class login:
         self.username=Label(credentials,text="Username",bg=color,font=font_size)
         self.username.place(x=70,y=50)
 
-        self.username_entry=Entry(credentials)
+        self.username_entry=ctk.CTkEntry(credentials, placeholder_text="username")
+        self.username_entry.focus()
         self.username_entry.place(x=150,y=50)
 
 #     password
         self.Password=Label(credentials,text="Password",bg=color,font=font_size)
-        self.Password.place(x=70,y=80)
+        self.Password.place(x=70,y=90)
 
-        self.Password_entry=Entry(credentials, show="*")
-        self.Password_entry.place(x=150,y=80)
+        self.Password_entry=ctk.CTkEntry(credentials, show="*",placeholder_text="password")
+        self.Password_entry.place(x=150,y=90)
 
 #      get in
-        self.signin_btn=Button(credentials,text="login",width=10,command=self.authenticate)
-        self.signin_btn.place(x=150,y=110)
+        self.signin_btn=ctk.CTkButton(credentials,text="Login",width=140,command=self.authenticate,text_color=fontcolor)
+        self.signin_btn.place(x=150,y=130)
 
 
 #      no account user redirect
-        self.no_account=Label(login_window,text="Don't have an account?",bg=color,font=font_size)
-        self.no_account.place(x=270,y=295)
-
-        self.signupbtn=Button(login_window,text="add new user",bg=color, border=0,font=font_size,command=self.signupview)
-        self.signupbtn.place(y=295,x=445)
+       
+        self.signupbtn=ctk.CTkButton(login_window,text="New User ?",width=140,text_color=fontcolor,command=self.signupview)
+        self.signupbtn.place(y=295,x=350)
     
 
     def authenticate(self):
@@ -244,8 +252,7 @@ class login:
                 elif department == "receptionist":
                     self.receptioninstance=receptionUX(self.main)
                 elif department =="doctor":
-                    self.main.destroy
-                    import doctorUI
+                    self.doctorinstance=doctorUX(self.main)
                     
                 else:
                     messagebox.showwarning("Warning!!","no interface for you😭")
@@ -275,6 +282,7 @@ class login:
 #  call the signup page
     def signupview(self):
         self.signup_instance=signup(self.main)
+        
     
 
         
